@@ -32,7 +32,7 @@ char	*ft_strstr(char *str, char *to_find)
 		y = 0;
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
 /*int main(void)
 {

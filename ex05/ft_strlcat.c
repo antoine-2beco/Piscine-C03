@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <stdio.h>
+#include <stdio.h>
 
 unsigned int	ft_strlen(char *str)
 {
@@ -28,12 +28,11 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 {
 	unsigned int	i;
 	int				y;
-	int				retu;
 
-	i = 0;
 	y = 0;
-	retu = ft_strlen(dest) + ft_strlen(src);
 	i = ft_strlen(dest);
+	if ((size == 0) || (size == i))
+		return (i + ft_strlen(src) + 1);
 	while ((i < (size - 1)) && (src[y] != '\0') && (size != 0))
 	{
 		dest[i] = src[y];
@@ -41,17 +40,18 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 		i++;
 	}
 	dest[i] = '\0';
-	return (retu); 
+	printf("%s\n", dest);
+	return (ft_strlen(dest) + 1); 
 }
 
-/*int	main(void)
+int	main(void)
 {
-	char dest[] = {"123"};
-	char src[] = {"def"};
-	unsigned int size = 0;
+	char dest[] = {"dst"};
+	char src[] = {"src"};
+	unsigned int size = 5;
 	
 	unsigned int res = {ft_strlcat(dest, src, size)};
 	printf("%d", res);
 
 	return(0);
-}*/
+}
