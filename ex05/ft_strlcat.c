@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include <stdio.h>*/
+/*#include <stdio.h>
+#include <string.h>*/
 
 unsigned int	ft_strlen(char *str)
 {
@@ -28,11 +29,11 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 {
 	unsigned int	i;
 	int				y;
+	unsigned int	dest_len;
 
 	y = 0;
-	i = ft_strlen(dest);
-	if ((size == 0) || (size == i))
-		return (i + ft_strlen(src) + 1);
+	dest_len = ft_strlen(dest);
+	i = dest_len;
 	while ((i < (size - 1)) && (src[y] != '\0') && (size != 0))
 	{
 		dest[i] = src[y];
@@ -40,17 +41,37 @@ unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 		i++;
 	}
 	dest[i] = '\0';
-	return (ft_strlen(dest) + 1); 
+	if ((size < 3) && (src[0] == '\0'))
+		return (size);
+	if (size < i)
+		return (dest_len + size);
+	return (dest_len + ft_strlen(src)); 
 }
 
 /*int	main(void)
 {
-	char dest[] = {"dst"};
+	char dest[] = "";
+	char ft_dest[100] = "";
 	char src[] = {"src"};
-	unsigned int size = 5;
+	unsigned int size = 0;
 	
 	unsigned int res = {ft_strlcat(dest, src, size)};
-	printf("%d", res);
-
+	printf("%d\n", res);
+	printf("%lu", strlcat(ft_dest, src, size));
 	return(0);
 }*/
+
+/*
+Before :                || After :
+dst   | src   | size    || dst      | return
+------------------------||--------------------
+dst\0 | src\0 | 0       || dst\0    | 3
+dst\0 | src\0 | 1       || dst\0    | 4
+dst\0 | src\0 | 2       || dst\0    | 5
+dst\0 | src\0 | 3       || dst\0    | 6
+dst\0 | src\0 | 4       || dst\0    | 6
+dst\0 | src\0 | 5       || dsts\0   | 6
+dst\0 | src\0 | 6       || dstsr\0  | 6
+dst\0 | src\0 | 7       || dstsrc\0 | 6
+dst\0 | src\0 | 8       || dstsrc\0 | 6
+*/
